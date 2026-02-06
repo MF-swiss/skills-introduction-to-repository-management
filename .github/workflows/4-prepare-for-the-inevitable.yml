@@ -74,27 +74,25 @@ jobs:
 
             return result;
 
-      - name: Check for Security Policy
-        id: check-security-policy
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
+- name: Check for Security Policy
+  id: check-security-policy
+  uses: actions/github-script@v7
+  with:
+    script: |
+      const fs = require('fs');
 
-            // Result object to store the message
-            let result = {
-              name: 'SECURITY.md',
-              passed: true,
-              message: ''
-            }
+      let result = {
+        name: 'SECURITY.md',
+        passed: true,
+        message: ''
+      };
 
-            // Check that file exists
-            if (!fs.existsSync('SECURITY.md')) {
-              result.passed = false;
-              result.message = 'File is missing.';
-            }
+      if (!fs.existsSync('SECURITY.md')) {
+        result.passed = false;
+        result.message = 'File is missing.';
+      }
 
-            return result;
+      core.setOutput('result', JSON.stringify(result));
 
       - name: Check all results
         id: check-all-results
