@@ -91,7 +91,7 @@ jobs:
         result.message = 'File is missing.';
       }
 
-      return result;
+      core.setOutput('result', JSON.stringify(result));
 
       - name: Check all results
         id: check-all-results
