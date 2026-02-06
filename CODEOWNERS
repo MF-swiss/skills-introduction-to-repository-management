@@ -1,0 +1,7 @@
+# Core functionality - changes here should be rare!
+/src/app.py                   @MF-swiss
+/src/backend/database.py      @MF-swiss
+/src/backend/routers/auth.py  @MF-swiss
+
+# The frontend will need refactored soon to be more object oriented.
+/src/static/   @MF-swiss
