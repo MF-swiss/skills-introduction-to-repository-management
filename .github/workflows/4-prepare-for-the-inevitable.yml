@@ -73,7 +73,6 @@ jobs:
             }
 
             return result;
-
 - name: Check for Security Policy
   id: check-security-policy
   uses: actions/github-script@v7
