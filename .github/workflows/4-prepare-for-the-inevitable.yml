@@ -18,7 +18,7 @@ env:
 
 jobs:
   find_exercise:
-    if: |
+    if: "!github.event.repository.is_template"
       !github.event.repository.is_template
     name: Find Exercise Issue
     uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@v0.6.0
