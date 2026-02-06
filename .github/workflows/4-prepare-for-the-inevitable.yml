@@ -87,7 +87,7 @@ jobs:
         message: ''
       };
 
-      if (!fs.existsSync('SECURITY.md')) {
+      if (!fs.existsSync(`${process.env.GITHUB_WORKSPACE}/SECURITY.md`)) {
         result.passed = false;
         result.message = 'File is missing.';
       }
