@@ -34,6 +34,9 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
+        
+      - name: Pull latest changes
+        run: git pull --rebase origin main
 
       - name: Load Exercise Toolkit
         uses: actions/checkout@v4
