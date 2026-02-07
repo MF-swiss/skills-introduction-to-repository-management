@@ -3,7 +3,7 @@ name: Step 4
 on:
   push:
     branches:
-      - prepare-to-collaborate
+      - main
     paths:
       - ".github/dependabot.yml"
       - "SECURITY.md"
