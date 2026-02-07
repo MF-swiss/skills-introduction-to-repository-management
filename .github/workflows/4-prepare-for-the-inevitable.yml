@@ -91,6 +91,61 @@ jobs:
 
             core.setOutput('result', JSON.stringify(result));
             return result;
+60  - name: Check for Dependabot config
+61    id: check-dependabot-config
+62    uses: actions/github-script@v7
+63    with:
+64      script: |
+65        const fs = require('fs');
+66
+67        let result = {
+68          name: 'dependabot.yml',
+69          passed: true,
+70          message: ''
+71        };
+72
+73        if (!fs.existsSync('.github/dependabot.yml')) {
+74          result.passed = false;
+75          result.message = 'File is missing.';
+76        }
+77
+78        core.setOutput('result', JSON.stringify(result));
+79
+80  - name: Check for Security Policy
+81    id: check-security-policy
+82    uses: actions/github-script@v7
+83    with:
+84      script: |
+85        const fs = require('fs');
+86
+87        let result = {
+88          name: 'SECURITY.md',
+89          passed: true,
+90          message: ''
+91        };
+92
+93        if (!fs.existsSync(`${process.env.GITHUB_WORKSPACE}/SECURITY.md`)) {
+94          result.passed = false;
+95          result.message = 'File is missing.';
+96        }
+97
+98        core.setOutput('result', JSON.stringify(result));
+99
+100 - name: Check all results
+101   id: check-all-results
+102   uses: actions/github-script@v7
+103   with:
+104     script: |
+105       const checks = [
+106         JSON.parse(process.env['check1']),
+107         JSON.parse(process.env['check2'])
+108       ];
+109
+110       const result = checks.every(check => check.passed);
+111       return result;
+112   env:
+113     check1: ${{ steps.check-dependabot-config.outputs.result }}
+114     check2: ${{ steps.check-security-policy.outputs.result }}
 
       - name: Check all results
         id: check-all-results
