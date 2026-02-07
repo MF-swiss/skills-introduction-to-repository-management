@@ -91,61 +91,6 @@ jobs:
 
             core.setOutput('result', JSON.stringify(result));
             return result;
-  - name: Check for Dependabot config
-    id: check-dependabot-config
-    uses: actions/github-script@v7
-    with:
-      script: |
-        const fs = require('fs');
-
-        let result = {
-          name: 'dependabot.yml',
-          passed: true,
-          message: ''
-        };
-
-        if (!fs.existsSync('.github/dependabot.yml')) {
-          result.passed = false;
-          result.message = 'File is missing.';
-        }
-
-        core.setOutput('result', JSON.stringify(result));
-
-  - name: Check for Security Policy
-    id: check-security-policy
-    uses: actions/github-script@v7
-    with:
-      script: |
-        const fs = require('fs');
-
-        let result = {
-          name: 'SECURITY.md',
-          passed: true,
-          message: ''
-        };
-
-        if (!fs.existsSync(`${process.env.GITHUB_WORKSPACE}/SECURITY.md`)) {
-          result.passed = false;
-          result.message = 'File is missing.';
-        }
-
-        core.setOutput('result', JSON.stringify(result));
-
- - name: Check all results
-   id: check-all-results
-   uses: actions/github-script@v7
-   with:
-     script: |
-       const checks = [
-         JSON.parse(process.env['check1']),
-         JSON.parse(process.env['check2'])
-       ];
-
-       const result = checks.every(check => check.passed);
-       return result;
-   env:
-     check1: ${{ steps.check-dependabot-config.outputs.result }}
-     check2: ${{ steps.check-security-policy.outputs.result }}
 
       - name: Check all results
         id: check-all-results
@@ -173,9 +118,9 @@ jobs:
               "step_number": 4,
               "passed": ${{ steps.check-all-results.outputs.result }},
               "results_table": [
-                  ${{ steps.check-dependabot-config.outputs.result }},
-                  ${{ steps.check-security-policy.outputs.result }}
-                ]
+                ${{ steps.check-dependabot-config.outputs.result }},
+                ${{ steps.check-security-policy.outputs.result }}
+              ]
             }
 
       - name: Create comment - step results
